@@ -1,11 +1,15 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
+import UserContext from '../context/user';
 import * as ROUTES from '../constants/routes';
+
+import { HomeIcon } from '@heroicons/react/outline';
+import { LogoutIcon } from '@heroicons/react/solid';
 
 const Header = () => {
     const { firebase } = useContext(FirebaseContext)
-    const user = {};
+    const { user } = useContext(UserContext)
 
     return(
         <header className="h-16 bg-white border-b mb-8">
@@ -22,7 +26,7 @@ const Header = () => {
                             {user ? (
                                 <>
                                     <Link to={ROUTES.DASHBOARD} aria-label="Home">
-                                        <p>Dashboard</p>
+                                        <HomeIcon className="w-8 mr-6 text-black-light cursor-pointer"/>
                                     </Link>
 
                                     <button
@@ -35,7 +39,7 @@ const Header = () => {
                                             }
                                         }}
                                     >
-                                        Sign Out
+                                        <LogoutIcon className="w-8 mr-6 text-black-light cursor-pointer"/>
                                     </button>
                                     <div className="flex items-center cursor-pointer">
                                         <Link to={`/p/${user.displayName}`}>
