@@ -24,3 +24,16 @@ export async function getUserByUserId(userId) {
 
     return user;
 }
+
+export async function getUserFollowedPhotos(userId, followingUserId) {
+    const result = await firebase
+        .firestore()
+        .collection('photos')
+        .where('userId', 'in', followingUserId)
+        .get();
+    
+    const userFollowedPhotos = result.doc.map((item) => ({
+        ...item.data(),
+        docId: item.id
+    }));
+}
