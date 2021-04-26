@@ -34,8 +34,6 @@ const Suggestions = ({ userId }) => {
                 ))}  
             </div>
         </div>
-        
-        
     ) : null;
 }
 
