@@ -6,14 +6,14 @@ import { isUserFollowingProfile, toggleFollow } from '../../services/firebase';
 
 export default function Header({
     photosCount,
-    followerCount,
+    followerCount: followers,
     setFollowerCount,
-    username,
+    username: profileUsername,
     profile: { docId: profileDocId, userId: profileUserId, fullName, following = [] }
 }) {
     const { user } = useUser();
     const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-    const activeBtnFollow = user.username && user.username !== username;
+    const activeBtnFollow = user.username && user.username !== profileUsername;
 
 
     const handleToggleFollow = async () => {
@@ -39,13 +39,13 @@ export default function Header({
             <div className="container flex justify-center">
                 <img
                     className="rounded-full h-40 w-40 flex"
-                    alt={`${username} profile picture`}
-                    src={`/images/avatars/${username}.jpg`}
+                    alt={`${profileUsername} profile picture`}
+                    src={`/images/avatars/${profileUsername}.jpg`}
                 />
             </div>
             <div className="flex items-center justify-center flex-col col-span-2">
                 <div className="container flex items-center">
-                    <p className="text-2xl mr-4">{username}</p>
+                    <p className="text-2xl mr-4">{profileUsername}</p>
                     {activeBtnFollow && (
                         <button
                             className="bg-blue-500 font-bold text-sm rounded text-white w-20 h-8"
@@ -57,7 +57,7 @@ export default function Header({
                     )}
                 </div>
                 <div className="container flex mt-4">
-                        {followerCount === undefined || following === undefined ? (
+                        {followers === undefined || following === undefined ? (
                             <Skeleton count={1} width={677} height={24} />
                         ) : (
                             <>
@@ -65,8 +65,8 @@ export default function Header({
                                     <span className="font-bold">{photosCount}</span> photos
                                 </p>
                                 <p className="mr=10">
-                                    <span className="font-bold">{followersCount}</span> {' '}
-                                    {followerCount === 1 ? 'follower' : 'followers'}
+                                    <span className="font-bold">{followers}</span> {' '}
+                                    {followers === 1 ? 'follower' : 'followers'}
                                 </p>
                                 <p className="mr=10">
                                     <span className="font-bold">{following.length}</span> following

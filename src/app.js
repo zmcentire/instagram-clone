@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
+import ProtectedRoute from './helpers/protected-route';
 import * as ROUTES from './constants/routes';
 import useAuthListener from './hooks/use-auth-listener';
 import UserContext from './context/user';
@@ -21,8 +22,10 @@ const App = () => {
                     <Switch>
                         <Route path={ROUTES.LOGIN} component={Login} />
                         <Route path={ROUTES.SIGN_UP} component={SignUp} />
-                        <Route path={ROUTES/PROFILE} component={Profile} />
-                        <Route path={ROUTES.DASHBOARD} component={Dashboard} exact />
+                        <Route path={ROUTES.PROFILE} component={Profile} />
+                        <ProtectedRoute user={user} path={ROUTES.DASHBOARD} exact>
+                            <Dashboard />
+                        </ProtectedRoute>
                         <Route component={NotFound} />
                     </Switch>
                 </Suspense>
